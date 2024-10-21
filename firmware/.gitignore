@@ -1,0 +1,37 @@
+# Ignore build directories and output files
+/build/
+*.bin
+*.elf
+*.map
+*.o
+*.d
+*.axf
+
+# SDK Configuration
+sdkconfig
+sdkconfig.old
+
+# Ignore VSCode-specific configuration files
+.vscode/
+*.code-workspace
+
+# Ignore devcontainer configurations if not needed
+.devcontainer/
+
+# CMake generated files
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles/
+*.cmake
+
+# Ignore Python virtual environments (if using Python)
+venv/
+.env/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# System-specific files
+Thumbs.db
+.DS_Store
