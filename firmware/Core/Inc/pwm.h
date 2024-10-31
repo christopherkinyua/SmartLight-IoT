@@ -4,12 +4,13 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-void LED_PWM_Init(void);
-void LED_set_dimming(uint32_t duty_percentage);
-void LED_test_dimming(void);
+    void LED_PWM_Init(void);
+    uint8_t LED_set_dimming(uint32_t duty_percentage);
+    void LED_test_dimming(void);
 
 #ifdef __cplusplus
 }
