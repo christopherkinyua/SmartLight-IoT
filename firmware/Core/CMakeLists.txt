@@ -8,4 +8,4 @@ file(GLOB SRC_FILES "${SRC_DIR}/*.c" "${SRC_DIR}/unit_tests/*.c")
 # Register the component with ESP-IDF
 idf_component_register(SRCS ${SRC_FILES}
                        INCLUDE_DIRS ${INCLUDE_DIRS}
-                       REQUIRES driver)
+                       REQUIRES driver esp_timer)

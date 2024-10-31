@@ -5,13 +5,14 @@
 
 #include "string.h"
 #include "stdio.h"
+#include "esp_timer.h"
 
 uint8_t TEST_run_all_unit_tests_and_log(char log_buffer[], uint16_t log_buffer_size)
 {
     uint16_t total_exec_count = 0;
     uint16_t total_pass_count = 0;
     uint16_t total_fail_count = 0;
-    // const uint32_t start_time_ms = HAL_GetTick();
+    const uint32_t start_time_ms = esp_timer_get_time() / 1000;
 
     log_buffer[0] = '\0';
 
@@ -41,16 +42,16 @@ uint8_t TEST_run_all_unit_tests_and_log(char log_buffer[], uint16_t log_buffer_s
             total_fail_count++;
         }
     }
-    // const uint32_t end_time_ms = HAL_GetTick();
+    const uint32_t end_time_ms = esp_timer_get_time() / 1000;
 
     snprintf(
         log_buffer,
         log_buffer_size,
-        "Total tests: %d - Pass: %d, Fail: %d",
+        "Total tests: %d - Pass: %d, Fail: %d, Duration: %lums",
         total_exec_count,
         total_pass_count,
-        total_fail_count);
-    // end_time_ms - start_time_ms);
+        total_fail_count,
+        end_time_ms - start_time_ms);
 
     return total_fail_count == 0;
 }

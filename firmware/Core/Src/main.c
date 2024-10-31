@@ -21,14 +21,14 @@ void app_main(void)
 
     if (unit_tests_result)
     {
-        printf("\nall tests passed\n");
+        printf("\nAll tests passed!\n");
     }
     else
     {
-        printf("\nsome tests failed\n");
+        printf("\nSome tests failed!\n");
     }
 
-        ESP_LOGI("Main", "Hello, ESP32-C3!");
+    ESP_LOGI("Main", "Hello, ESP32-C3!");
 
     // For demonstration, create a simple task
     while (true)
