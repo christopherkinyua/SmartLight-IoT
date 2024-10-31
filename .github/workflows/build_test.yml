@@ -30,7 +30,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        idf.py set-target esp32  # Replace with your target if different
+        idf.py set-target esp32c3  # Replace with your target if different
 
     - name: Build ESP32 Project
       run: idf.py build
