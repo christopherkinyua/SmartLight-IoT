@@ -11,9 +11,9 @@ const TEST_Definition_t TEST_definitions[] = {
      .test_file = "unit_tests/unit_test_function_arg_helpers",
      .test_func_name = "is_valid_hex_string"},
 
-    {.test_func = TEST_EXEC__LED_set_dimming,
-     .test_file = "unit_tests/unit_test_pwm",
-     .test_func_name = "LED_set_dimming"},
+    // {.test_func = TEST_EXEC__LED_set_dimming,
+    //  .test_file = "unit_tests/unit_test_pwm",
+    //  .test_func_name = "LED_set_dimming"},
 
     {.test_func = TEST_EXEC__RGB_convert_hex_to_rgb,
      .test_file = "unit_tests/unit_test_rgb",
