@@ -2,10 +2,16 @@
 #define __INCLUDE_GUARD__IO_H__
 
 #include <stdint.h>
+#include "driver/gpio.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define RED_GPIO_PIN GPIO_NUM_5
+#define BLUE_GPIO_PIN GPIO_NUM_6
+#define GREEN_GPIO_PIN GPIO_NUM_4
+#define WHITE_GPIO_PIN GPIO_NUM_7
 
 void GPIO_init(void);
 

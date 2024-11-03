@@ -14,9 +14,11 @@ extern "C"
         uint8_t RGB_red;   // Red component (0-255)
         uint8_t RGB_green; // Green component (0-255)
         uint8_t RGB_blue;  // Blue component (0-255)
+        uint8_t RGB_brightness; // Brightness value (0-100)
     } LED_RGB_t;
 
     uint8_t RGB_convert_hex_to_rgb(const char *hex_color_code, LED_RGB_t *rgb_result);
+    uint8_t RGB_apply_brightness(const uint8_t *rgb_brightness, LED_RGB_t *rgb_result);
 
 #ifdef __cplusplus
 }
