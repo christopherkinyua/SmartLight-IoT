@@ -1,4 +1,5 @@
 #include "pwm.h"
+#include "IO.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -18,19 +19,59 @@ void LED_PWM_Init(void)
         .timer_num = LEDC_TIMER_0,
         .duty_resolution = LEDC_TIMER_13_BIT, // 13-bit resolution for the duty cycle
         .freq_hz = 5000,                      // Frequency in Hertz
-        .clk_cfg = LEDC_AUTO_CLK};
+        .clk_cfg = LEDC_AUTO_CLK
+    };
     ledc_timer_config(&ledc_timer);
+    
+    
 
-    // Setting up the LEDC channel Configuration for GPIO pin 0
-    ledc_channel_config_t ledc_channel = {
+    // Setting up the LEDC channel Configuration for Red Channel
+    ledc_channel_config_t LED_red_channel = {
         .speed_mode = LEDC_LOW_SPEED_MODE,
         .channel = LEDC_CHANNEL_0,
         .timer_sel = LEDC_TIMER_0,
         .intr_type = LEDC_INTR_DISABLE,
-        .gpio_num = GPIO_NUM_0,
-        .duty = 0, // Initially off
+        .gpio_num = RED_CHANNEL,
+        .duty = 0, 
+        .hpoint = 0
+    };
+
+    // ledc_channel_config(&LED_red_channel);
+
+    if(ledc_channel_config(&LED_red_channel) == ESP_ERR_INVALID_ARG){
+        printf("Invalid Param for Red Channel");
+    }
+    
+
+    // Setting up the LEDC channel Configuration for Green Channel
+    ledc_channel_config_t LED_green_channel = {
+        .speed_mode = LEDC_LOW_SPEED_MODE,
+        .channel = LEDC_CHANNEL_0,
+        .timer_sel = LEDC_TIMER_0,
+        .intr_type = LEDC_INTR_DISABLE,
+        .gpio_num = GREEN_CHANNEL,
+        .duty = 0, 
         .hpoint = 0};
-    ledc_channel_config(&ledc_channel);
+    ledc_channel_config(&LED_green_channel);
+
+    if(ledc_channel_config(&LED_green_channel) == ESP_ERR_INVALID_ARG){
+        printf("Invalid Param for blue Channel");
+    }
+
+    // Setting up the LEDC channel Configuration for Blue Channel
+    ledc_channel_config_t LED_blue_channel = {
+        .speed_mode = LEDC_LOW_SPEED_MODE,
+        .channel = LEDC_CHANNEL_0,
+        .timer_sel = LEDC_TIMER_0,
+        .intr_type = LEDC_INTR_DISABLE,
+        .gpio_num = BLUE_CHANNEL,
+        .duty = 0, 
+        .hpoint = 0};
+    // ledc_channel_config(&LED_red_channel);
+
+    if(ledc_channel_config(&LED_blue_channel) == ESP_ERR_INVALID_ARG){
+        printf("Invalid Param for blue Channel");
+    }
 }
 
 /// @brief 0-10V Dimming: Controls the dimming level of an LED using PWM.

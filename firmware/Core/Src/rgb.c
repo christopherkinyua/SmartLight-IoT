@@ -57,3 +57,28 @@ uint8_t RGB_convert_hex_to_rgb(const char *hex_color_code, LED_RGB_t *rgb_result
 
     return 0;
 }
+
+
+/// @brief Applies the brightness param to the RGB values.
+/// @param LED_brightness - The brightness value to be applied (uint8_t)
+/// @param rgb_result - The struct to store the parsed RGB values
+/// @return 0 on success, > 0 on error
+uint8_t RGB_apply_brightness_to_rgb(const uint8_t *LED_brightness, LED_RGB_t *rgb_result)
+{
+    if(LED_brightness == NULL || *LED_brightness > 100){
+        // Error: Missing brightness value
+        return 1;
+    }
+
+    if(rgb_result == NULL){
+        // Error: Missing RGB value
+        return 2;
+    }
+
+    //Apply brightness to RGB Values
+    rgb_result->RGB_red = (rgb_result->RGB_red * (*LED_brightness)) / 100;
+    rgb_result->RGB_green = (rgb_result->RGB_green * (*LED_brightness)) / 100;
+    rgb_result->RGB_blue = (rgb_result->RGB_blue * (*LED_brightness)) /100;
+
+    return 0;
+}

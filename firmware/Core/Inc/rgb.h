@@ -18,6 +18,7 @@ extern "C"
     } LED_RGB_t;
 
     uint8_t RGB_convert_hex_to_rgb(const char *hex_color_code, LED_RGB_t *rgb_result);
+    uint8_t RGB_apply_brightness_to_rgb(const uint8_t *LED_brightness, LED_RGB_t *rgb_result);
 
 #ifdef __cplusplus
 }
