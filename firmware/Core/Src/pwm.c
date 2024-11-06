@@ -1,5 +1,6 @@
 #include "pwm.h"
 #include "IO.h"
+#include "rgb.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -28,10 +29,10 @@ void LED_PWM_Init(void)
     // Setting up the LEDC channel Configuration for Red Channel
     ledc_channel_config_t LED_red_channel = {
         .speed_mode = LEDC_LOW_SPEED_MODE,
-        .channel = LEDC_CHANNEL_0,
+        .channel = RED_CHANNEL,
         .timer_sel = LEDC_TIMER_0,
         .intr_type = LEDC_INTR_DISABLE,
-        .gpio_num = RED_CHANNEL,
+        .gpio_num = RED_GPIO_PIN,
         .duty = 0, 
         .hpoint = 0
     };
@@ -46,10 +47,10 @@ void LED_PWM_Init(void)
     // Setting up the LEDC channel Configuration for Green Channel
     ledc_channel_config_t LED_green_channel = {
         .speed_mode = LEDC_LOW_SPEED_MODE,
-        .channel = LEDC_CHANNEL_0,
+        .channel = GREEN_CHANNEL,
         .timer_sel = LEDC_TIMER_0,
         .intr_type = LEDC_INTR_DISABLE,
-        .gpio_num = GREEN_CHANNEL,
+        .gpio_num = GREEN_GPIO_PIN,
         .duty = 0, 
         .hpoint = 0};
     ledc_channel_config(&LED_green_channel);
@@ -61,10 +62,10 @@ void LED_PWM_Init(void)
     // Setting up the LEDC channel Configuration for Blue Channel
     ledc_channel_config_t LED_blue_channel = {
         .speed_mode = LEDC_LOW_SPEED_MODE,
-        .channel = LEDC_CHANNEL_0,
+        .channel = BLUE_CHANNEL,
         .timer_sel = LEDC_TIMER_0,
         .intr_type = LEDC_INTR_DISABLE,
-        .gpio_num = BLUE_CHANNEL,
+        .gpio_num = BLUE_GPIO_PIN,
         .duty = 0, 
         .hpoint = 0};
     // ledc_channel_config(&LED_red_channel);
@@ -121,4 +122,51 @@ void LED_test_dimming(void)
         }
         vTaskDelay(500 / portTICK_PERIOD_MS); // Delay 500ms
     }
+}
+
+
+/// @brief RGBW Dimming: Controls the dimming level of an LED using PWM.
+/// @param rgb_values
+/// - Arg 0: The struct containing the RGB values to be used in PWM dimming
+/// @return 0 on success, > 0 on error
+uint8_t LED_set_rgb_dimming(LED_RGB_t *rgb_values)
+{
+    if (rgb_values == NULL)
+    {
+        // Error: Missing LED_RGB_t struct
+        return 1;
+    }
+
+    // Define duty variable for calculating each channel’s duty cycle
+    uint32_t duty;
+
+    // Set the duty cycle for the RED channel
+    duty = (8191 * rgb_values->RGB_red) / 255; // 8191 = 2^13 - 1 (13-bit resolution)
+    
+    if (ledc_set_duty(LEDC_LOW_SPEED_MODE, RED_CHANNEL, duty) != ESP_OK ||
+        ledc_update_duty(LEDC_LOW_SPEED_MODE, RED_CHANNEL) != ESP_OK)
+    {
+        // Error setting or updating RED channel
+        return 2;
+    }
+
+    // Set the duty cycle for the GREEN channel
+    duty = (8191 * rgb_values->RGB_green) / 255;
+    if (ledc_set_duty(LEDC_LOW_SPEED_MODE, GREEN_CHANNEL, duty) != ESP_OK ||
+        ledc_update_duty(LEDC_LOW_SPEED_MODE, GREEN_CHANNEL) != ESP_OK)
+    {
+        // Error setting or updating GREEN channel
+        return 3;
+    }
+
+    // Set the duty cycle for the BLUE channel
+    duty = (8191 * rgb_values->RGB_blue) / 255;
+    if (ledc_set_duty(LEDC_LOW_SPEED_MODE, BLUE_CHANNEL, duty) != ESP_OK ||
+        ledc_update_duty(LEDC_LOW_SPEED_MODE, BLUE_CHANNEL) != ESP_OK)
+    {
+        // Error setting or updating BLUE channel
+        return 4;
+    }
+
+    return 0;
 }

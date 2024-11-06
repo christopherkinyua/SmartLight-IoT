@@ -36,7 +36,7 @@ void app_main(void)
     {
         vTaskDelay(1000 / portTICK_PERIOD_MS); // Delay 1 second
         ESP_LOGI("Main", "Running...");
-        LED_test_dimming();
+        // LED_test_dimming();
 
         // TODO: Create an rtos thread to handle the dimming
         LED_RGB_t rgb_values;
@@ -50,6 +50,12 @@ void app_main(void)
 
         if(brightness_result == 0){
             printf("Very Nice: Dimming Applied\n");
+        }
+
+        const uint8_t rgb_dimming_result = LED_set_rgb_dimming(&rgb_values);
+
+        if(rgb_dimming_result == 0){
+            printf("GREAT SUCCESS! Dimming worked\n");
         }
     }
 }

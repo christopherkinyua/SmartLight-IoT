@@ -8,9 +8,9 @@
 extern "C" {
 #endif
 
-#define RED_CHANNEL GPIO_NUM_5
-#define GREEN_CHANNEL GPIO_NUM_4
-#define BLUE_CHANNEL GPIO_NUM_6
+#define RED_GPIO_PIN GPIO_NUM_5
+#define GREEN_GPIO_PIN GPIO_NUM_4
+#define BLUE_GPIO_PIN GPIO_NUM_6
 
 void GPIO_init(void);
 
