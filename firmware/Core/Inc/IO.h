@@ -4,10 +4,12 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-void GPIO_init(void);
+    void GPIO_init(void);
+    void i2c_init(void);
 
 #ifdef __cplusplus
 }
